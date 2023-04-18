@@ -40,7 +40,7 @@
                 </div>
                 <div class="text text-center w-100">
                     <p id="price">19900</p>
-                    
+
                 </div>
             </div>
         </div>
@@ -51,14 +51,18 @@
         crossorigin="anonymous"></script>
     <script type="module">
         import { $g } from "./models/helper.js";
-        const url = "https://raw.githubusercontent.com/apprunner/FileStorage/master/iPadAir2020_Data.json";
-        let file
-        let data = fetch(url).then((response) =>{
-            file = response.text();
+        const url    = "https://raw.githubusercontent.com/apprunner/FileStorage/master/iPadAir2020_Data.json";
+
+        let data = [];
+        fetch(url).then(response => {
+            return response.json();            
+        }).then(response => {
+            response.forEach(x => {
+                data.push(x);
+            });
         });
-        
-        
-        
+        console.log(data);
+
         
 
 
