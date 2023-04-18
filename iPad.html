@@ -20,27 +20,26 @@
             <div class="col-12 col-md-6 ">
                 <div class="sel">
                     <select class="form-select m-3" aria-label="Default select example" id="color">
-                        <option selected>顏色</option>
+                        <option selected value="0">顏色</option>
                         <option value="1">太空灰色</option>
-                        <option value="2">銀色</option>
-                        <option value="3">玫瑰金色</option>
-                        <option value="4">綠色</option>
-                        <option value="5">天藍色</option>
+                        <option value="2">藍色</option>
+                        <option value="3">粉紅色</option>
+                        <option value="4">紫色</option>
+                        <option value="5">星光色</option>
                     </select>
                     <select class="form-select m-3" aria-label="Default select example" id="net">
-                        <option selected>網路</option>
+                        <option selected value="0">網路</option>
                         <option value="1">Wi-Fi</option>
-                        <option value="2">Cellular</option>
+                        <option value="2">Wi-Fi+行動網路</option>
                     </select>
-                    <select class="form-select m-3" aria-label="Default select example" id="storge">
-                        <option selected>容量</option>
+                    <select class="form-select m-3" aria-label="Default select example" id="ram">
+                        <option selected value="0">容量</option>
                         <option value="1">64GB</option>
                         <option value="2">256GB</option>
                     </select>
                 </div>
                 <div class="text text-center w-100">
-                    <p id="price">19900</p>
-
+                    <p id="price"></p>
                 </div>
             </div>
         </div>
@@ -49,11 +48,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+
     <script type="module">
-        import { $g } from "./models/helper.js";
-        const url    = "https://raw.githubusercontent.com/apprunner/FileStorage/master/iPadAir2020_Data.json";
+        const url    = "https://raw.githubusercontent.com/ObsDIan/FileStorage/master/iPad20.json";
 
         let data = [];
+        let sec_all = document.querySelectorAll('.form-select');
+        let color = document.querySelector('#color');
+        let net = document.querySelector('#net');
+        let ram = document.querySelector('#ram');
+        let price = document.querySelector('#price');
+        let pic = document.querySelector('#ipad_pic');
+
         fetch(url).then(response => {
             return response.json();            
         }).then(response => {
@@ -61,11 +67,21 @@
                 data.push(x);
             });
         });
-        console.log(data);
 
-        
-
-
+        sec_all.forEach(x => {
+            x.addEventListener('change', function() {
+                let f = data
+                    f = data.filter(x => x.color === color[color.value].innerText && 
+                        x.network == net[net.value].innerText &&
+                        x.storage == ram[ram.value].innerText)
+                    f.forEach(x => {
+                        price.innerText = x.price;
+                        pic.src = x.picture;
+                    });
+                    
+                    
+            });
+        });
     </script>
 </body>
 
